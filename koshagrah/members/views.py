@@ -11,7 +11,7 @@ import math, random
 from django.shortcuts import redirect
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from datetime import datetime
-from .models import upload_posts,upload_achievements,upload_reviews,upload_achievements_emp,chat_message,latestmessage,viewthread
+from .models import upload_posts,upload_achievements,upload_reviews,upload_achievements_emp,chat_message,latestmessage,viewthread,upload_notice
 import base64
 from django.core.files.base import ContentFile
 from datetime import datetime
@@ -183,7 +183,11 @@ def profile(request):
             detail = upload_achievements.objects.filter(user=user)
         rev=upload_reviews.objects.filter(stuid=user.id)
         posts=upload_posts.objects.filter(admin=user.admin,username=username ).order_by("id")[::-1]
-        return render(request,"general/profile.html",{"rev":rev,"user":user,"details":details,"posts":posts,"cert":detail})
+        try:
+            notice_disp=upload_notice.objects.filter(admin_id=user.admin_id,username=user.empid).order_by('id')[::-1]
+        except:
+            notice_disp=None
+        return render(request,"general/profile.html",{"rev":rev,"user":user,"details":details,"posts":posts,"cert":detail,'notice':notice_disp})
     else:
         return redirect("/login ")
 def teacher_accept(request):
@@ -580,4 +584,63 @@ def reviews(request,id):
     
 @xframe_options_sameorigin
 def notices(request):
-    return render(request,"general/notices.html")
+    try:
+        logged=teachermodel.objects.get(empid=request.session["teacher"])
+        c='1'
+    except:
+        logged=studentmodel.objects.get(stuid=request.session["student"])
+        c='0'
+    notice_disp=upload_notice.objects.filter(admin_id=logged.admin_id).order_by('id')[::-1]
+    return render(request,"general/notices.html",{'notice':notice_disp,'c':c})
+
+def post_notice(request):
+    if(request.session.has_key("logged") and request.session["logged"]==True):
+        fmt = "%d-%m-%Y %H:%M"
+        zone = 'Asia/Kolkata'
+        now_time = datetime.now(timezone(zone))
+        time = now_time.strftime(fmt)
+        try:
+            user=teachermodel.objects.get(empid=request.session["teacher"])
+        except:
+            return HttpResponse("Sorry! You cannot acces the request!")
+        try:
+            desc=request.POST.get('desc')
+        except:
+            desc="."
+        try:
+            link=request.POST.get('link')
+        except:
+            link="#"
+        try:
+            base64_string = request.POST["outputimg"]
+            image = request.FILES["file"]
+            data = ContentFile(base64.b64decode(base64_string), name=image.name)
+            r=upload_notice.objects.create(desc=desc,image=data,link=link,admin=user.admin,name=user.name,username=user.empid,profilelink="T/"+str(user.id),photolink=user.photo,designation=1,time=time)
+        except:
+            r=upload_notice.objects.create(desc=desc,link=link,admin=user.admin,name=user.name,username=user.empid,profilelink="T/"+str(user.id),photolink=user.photo,designation=1,time=time)
+    return redirect("/notices")
+def delete_post(request,id):
+    admin=0
+    try:
+        try:
+            user=teachermodel.objects.get(empid=request.session["teacher"])
+            username=user.empid
+        except:
+            user = studentmodel.objects.get(stuid=request.session["student"])
+            username=user.stuid
+    except:
+        user=User.objects.get(username=request.session['username'])
+        admin=1
+    if admin==0:
+        p=upload_posts.objects.get(id=id)
+        if p.username==username:
+            p.delete()
+        else:
+            return HttpResponse("You don't have permission to access the request!")
+    elif admin==1:
+        p=upload_posts.objects.get(id=id)
+        if p.admin_id==user.id:
+            p.delete()
+        else:
+            return HttpResponse("You don't have permission to access the request!")
+    return redirect('/profile')

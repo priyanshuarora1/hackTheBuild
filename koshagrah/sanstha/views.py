@@ -7,9 +7,13 @@ from passlib.hash import pbkdf2_sha256
 from django.shortcuts import redirect
 from django.contrib.auth import login, authenticate,logout
 from .models import admindetails
-from members.models import studentmodel,teachermodel,upload_posts
+from members.models import studentmodel,teachermodel,upload_posts,upload_notice
 import string 
 import random 
+from datetime import datetime
+from pytz import timezone
+import base64
+from django.core.files.base import ContentFile
 # Create your views here.
 
 # @login_required
@@ -156,3 +160,29 @@ def delpost(request):
         logged=User.objects.get(username=username)
         postid = request.GET["id"]
         return HttpResponse("post deleted")
+def notice(request):
+    if(request.session.has_key("logged") and request.session["logged"]==True):
+        fmt = "%d-%m-%Y %H:%M"
+        zone = 'Asia/Kolkata'
+        now_time = datetime.now(timezone(zone))
+        time = now_time.strftime(fmt)
+        user=User.objects.get(username=request.session["username"])
+        try:
+            desc=request.POST.get('desc')
+        except:
+            desc="."
+        try:
+            link=request.POST.get('link')
+        except:
+            link="#"
+        try:
+            base64_string = request.POST["outputimg"]
+            image = request.FILES["file"]
+            data = ContentFile(base64.b64decode(base64_string), name=image.name)
+            r=upload_notice.objects.create(desc=desc,image=data,link=link,admin=user,name=user.first_name,username=user.username,profilelink="#",photolink=user.admindetails.pic,designation=1,time=time)
+        except:
+            r=upload_notice.objects.create(desc=desc,link=link,admin=user,name=user.first_name,username=user.username,profilelink="#",photolink=user.admindetails.pic,designation=1,time=time)
+        
+        return redirect("/sanstha/feed")
+    else:
+        return redirect("/sanstha/login")

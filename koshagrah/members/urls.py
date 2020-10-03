@@ -38,4 +38,6 @@ urlpatterns = [
     path("review/<str:id>",views.reviews,name='review'),
     path("offline.html",views.offline,name="offline"),
     path("notices",views.notices,name="notices"),
+    path("uploadnotices",views.post_notice,name="notice"),
+    path("deletepost/<str:id>",views.delete_post,name="del post"),
     ]
