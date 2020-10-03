@@ -83,60 +83,31 @@
                     </div>
                     </div>
                 </div>
-        
-            <div id="1" class="w3-card-4 w3-white w3-center w3-margin w3-hover-shadow w3-round-large" style="max-width:600px">
-                <header class="w3-container w3-white w3-round-large" style="display: flex;">
-                   <div style="width:80%;" class="w3-left">
-                    <a href="#" style="padding:8px 0px 8px 16px;"><img class="w3-circle" style="height:40px; width:40px"
-                            src="https://rajathandsom.pythonanywhere.com/static/images/user.png" alt="User"
-                            title="Click for menu"></a>
-                    <h3 style="margin-top:10px;display:inline">John Doe</h3>
-                </div>
-                    <span onclick="del(1)" class="w3-padding w3-white;" style="width:20%;cursor:pointer;font-size:24px"><i class="fa fa-trash"></i></span>
+                {% for post in posts %}
+            <div class="w3-card-4 w3-center w3-margin w3-hover-shadow w3-round-large" style="padding-bottom:20px;max-width:600px;background:white">
+                <header class="w3-container  w3-round-large">
+                    <a href="#" style="margin:10px 0px 0px 10px;display:flex;">
+                        <img class="w3-circle" style="height:40px; width:40px" src="/media/{{post.photolink}}" alt="User"
+                            title="Click for menu">
+                        <h3 style="margin-left:10px;transform:translateY(-5px);color: black+;">{{post.name}}</h3><br><br>
+                    </a>
+                    <h6 class="w3-left w3-small w3-text-gray" style="margin-left:60px;transform:translateY(-20px);user-select: none;">{{post.time}}</h6>
+                    <div class="w3-container" style="margin:0px;transform:translateY(-30px)">
+                        <br>
+                        <p style="font-weight: bold; text-align: left;">{{post.desc}}</p>
+                        {% if post.link %} <button class="w3-btn w3-left w3-round-large w3-shadow" style="background-color:lightblue ;"><a style="text-decoration:none"href="{{post.link}}" target="_blank">View More &rarr;</a></button>
+                        {% endif %}
+                    </div>
                 </header>
+                <div class="w3-container" style="background:white">
+                    {% if post.image %}
+                    <img src="/media/{{post.image}}" style="border-bottom: 10px;border-radius:5px" height="200" width="200" alt="Avatar">
 
-                <div class="w3-container">
-                    <img src="https://rajathandsom.pythonanywhere.com/static/images/cover.jpeg" height="200" width="200"
-                        alt="Avatar">
-                    <p>President/CEO at Mighty Schools...</p>
+                    {% endif %}
                 </div>
             </div>
-            <div id="2" class="w3-card-4 w3-white w3-center w3-margin w3-hover-shadow w3-round-large" style="max-width:600px">
-                <header class="w3-container w3-white w3-round-large" style="display: flex;">
-                   <div style="width:80%;" class="w3-left">
-                    <a href="#" style="padding:8px 0px 8px 16px;"><img class="w3-circle" style="height:40px; width:40px"
-                            src="https://rajathandsom.pythonanywhere.com/static/images/user.png" alt="User"
-                            title="Click for menu"></a>
-                    <h3 style="margin-top:10px;display:inline">John Doe</h3>
-                </div>
-                    <span onclick="del(2)" class="w3-padding w3-white;" style="width:20%;cursor:pointer;font-size:24px"><i class="fa fa-trash"></i></span>
-                </header>
-
-                <div class="w3-container">
-                    <img src="https://rajathandsom.pythonanywhere.com/static/images/cover.jpeg" height="200" width="200"
-                        alt="Avatar">
-                    <p>President/CEO at Mighty Schools...</p>
-                </div>
-            </div>
-            <div id="3" class="w3-card-4 w3-white w3-center w3-margin w3-hover-shadow w3-round-large" style="max-width:600px">
-                <header class="w3-container w3-white w3-round-large" style="display: flex;">
-                   <div style="width:80%;" class="w3-left">
-                    <a href="#" style="padding:8px 0px 8px 16px;"><img class="w3-circle" style="height:40px; width:40px"
-                            src="https://rajathandsom.pythonanywhere.com/static/images/user.png" alt="User"
-                            title="Click for menu"></a>
-                    <h3 style="margin-top:10px;display:inline">John Doe</h3>
-                </div>
-                    <span onclick="del(3)" class="w3-padding w3-white;" style="width:20%;cursor:pointer;font-size:24px"><i class="fa fa-trash"></i></span>
-                </header>
-
-                <div class="w3-container">
-                    <img src="https://rajathandsom.pythonanywhere.com/static/images/cover.jpeg" height="200" width="200"
-                        alt="Avatar">
-                    <p>President/CEO at Mighty Schools...</p>
-                </div>
-            </div>
-            
-
+            {% endfor %}
+           
         </center>
     </div>
 

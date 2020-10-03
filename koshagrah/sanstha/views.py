@@ -7,7 +7,7 @@ from passlib.hash import pbkdf2_sha256
 from django.shortcuts import redirect
 from django.contrib.auth import login, authenticate,logout
 from .models import admindetails
-from members.models import studentmodel,teachermodel
+from members.models import studentmodel,teachermodel,upload_posts
 import string 
 import random 
 # Create your views here.
@@ -89,8 +89,9 @@ def dashboard(request):
         n=random.randint(5, 9)
         res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = n))
         res=res+"*"+str(logged.id)+"$"+res
-
-        return render(request,"sanstha/dashboard.html",{"user":logged,"res":res})
+        
+        # return render(request,"general/home.html",)
+        return render(request,"sanstha/dashboard.html",{"user":logged,"res":res,'posts':posts})
     else:
         return redirect("/sanstha/login")
 
@@ -146,7 +147,8 @@ def posts(request):
     if(request.session.has_key('loged') and request.session['loged']==True):
         username = request.session["username"]
         logged=User.objects.get(username=username)
-        return render(request,"sanstha/allpost.html")
+        posts=upload_posts.objects.filter(admin=logged.id).order_by("id")[::-1]
+        return render(request,"sanstha/allpost.html",{'posts':posts})
 
 def delpost(request):
     if(request.session.has_key('loged') and request.session['loged']==True):
