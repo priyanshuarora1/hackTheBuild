@@ -127,6 +127,8 @@
 						{% for post in posts %}
 						<div class="w3-card-4 w3-center w3-margin w3-hover-shadow w3-round-large"
 							style="background:#ffffce;padding-bottom:20px;max-width:600px;min-width:500px">
+							<h5 style="margin-left: 80%; padding-top: 2%;"><i class="fa fa-trash fa-lg" style="color: red;"></i></h5>
+
 							<header class="w3-container  w3-round-large">
 								<a href="#" style="margin:10px 0px 0px 10px;display:flex;">
 									<img class="w3-circle" style="height:40px; width:40px"
@@ -134,7 +136,9 @@
 									<h3
 										style="margin-left:10px;margin-top: 10px; transform:translateY(-15px);color: black;">
 										{{post.name}}</h3>
+
 								</a>
+								
 								<h6 class="w3-left w3-small w3-text-gray"
 									style="margin-left:60px;transform:translateY(-30px);user-select: none; margin-top: 17px;">
 									{{post.time}}</h6>
@@ -149,6 +153,7 @@
 									{% endif %}
 								</div>
 							</header>
+							
 							<div class="w3-container" style="background:#ffffce">
 								{% if post.image %}
 								<img src="media/{{post.image}}" style="border-bottom: 10px;" height="200" width="200"

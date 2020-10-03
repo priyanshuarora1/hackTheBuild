@@ -578,3 +578,6 @@ def reviews(request,id):
     r=upload_reviews.objects.create(review=review,time=time,stuid=stuid,empphoto=empphoto,emplink=emplink,empname=empname)
     return redirect("/")
     
+@xframe_options_sameorigin
+def notices(request):
+    return render(request,"general/notices.html")

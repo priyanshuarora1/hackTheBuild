@@ -37,4 +37,5 @@ urlpatterns = [
     path("viewprofile/T/<str:id>",views.empprofileForOthers,name='empprofileForOthers'),
     path("review/<str:id>",views.reviews,name='review'),
     path("offline.html",views.offline,name="offline"),
+    path("notices",views.notices,name="notices"),
     ]
