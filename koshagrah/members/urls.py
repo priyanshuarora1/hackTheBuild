@@ -40,4 +40,5 @@ urlpatterns = [
     path("notices",views.notices,name="notices"),
     path("uploadnotices",views.post_notice,name="notice"),
     path("deletepost/<str:id>",views.delete_post,name="del post"),
+    path("deletenotice/<str:id>",views.delete_notice,name="del notice"),
     ]

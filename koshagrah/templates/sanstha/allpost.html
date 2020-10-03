@@ -15,77 +15,10 @@
 {% block content %}
     <div class="container" style="margin:0px">
         <center>
-            <form action="/sanstha/notice" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="w3-container w3-white w3-round-large w3-hover-shadow w3-card-4 w3-white"
-                    style="padding: 0px;max-width: 600px;">
-                    <textarea style="outline:0px;resize: none; border:0px;"
-                        class="w3-padding w3-round-large w3-border-bottom w3-input w3-white" type="text" rows="4"
-                        name="desc" placeholder="Write a new post..."></textarea>
-                    <input type="text" class="w3-padding w3-round-large w3-border-bottom w3-input w3-white" name="link"
-                        id="link" placeholder="Link">
-                    <div class="image-upload w3-margin w-madding w3-large w3-left">
-                        <label for="file-input">
-                            <i class="fa fa-upload w3-xlarge"><span id="name"
-                                    class="w3-small w3-margin-left w3-text-blue">Attach Image</span></i>
-                        </label>
-                        <input type="text" id="outputimg" name="outputimg" style="display: none;">
-                        <input id="file-input" name="file" type="file" />
-                        <img id="output" name='pic' width="200" height="200" class="w3-card w3-hover-shadow"
-                            style="display:none" />
-                    </div>
-                    <button type="submit" class="w3-btn w3-round w3-right w3-margin w3-padding w3-yellow">Post</button>
-                </div>
-            </form>
-
-
-                <div class="cropHolder w3-card w3-blue w3-round-large">
-                    <div id="cropWrapper">
-                        <img id="inputImage" src="images/city.jpg">
-                    </div>
-                    <div class="cropInputs w3-display-bottommiddle" style="display: flex; flex-direction:column; background:blue;width:100%;height:50%;z-index:2;">
-                        <div style="display: flex;flex-direction:row;margin:0px auto">
-                        <div class="inputtools">
-                            <p>
-                                <span>
-                                    <!-- <img src="{% static 'crop/horizontal.png' %}"> -->
-                                    <i style="font-size: 24px;" aria-hidden="true">&harr;
-                                    </i>
-                                </span>
-                                <span>horizontal movement</span>
-                            </p>
-                            <input type="range" class="cropRange" name="xmove" id="xmove" min="0" value="0">
-                        </div>
-                        <div class="inputtools">
-                            <p>
-                                <span>
-                                    <!-- <img src="{% static 'crop/vertical.png' %}"> -->
-                                    <i style="font-size: 24px;" aria-hidden="true">&#8597;
-                                    </i>
-                                </span>
-                                <span>vertical movement</span>
-                            </p>
-                            <input type="range" class="cropRange" name="ymove" id="ymove" min="0" value="0">
-                        </div>
-                    </div>
-                    <div style="display: flex;margin:0px auto">
-                        <button class="w3-button w3-circle w3-black w3-small w3-margin cropButtons" id="zplus">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
-                        <button class="w3-button w3-circle w3-black w3-small w3-margin cropButtons" id="zminus">
-                            <i class="fa fa-minus" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                        <br>
-                        <div style="display: flex;margin:0px auto">
-                        <button class="w3-button w3-margin w3-teal" id="cropSubmit">Crop</button>
-                        <button class="w3-button w3-margin w3-teal" id="closeCrop">Close</button>
-                    </div>
-                    </div>
-                </div>
+            {% if posts %}
                 {% for post in posts %}
             <div class="w3-card-4 w3-center w3-margin w3-hover-shadow w3-round-large" style="padding-bottom:20px;max-width:600px;background:white">
-                <h5 style="margin-left: 80%; padding-top: 2%;"><i class="fa fa-trash " style="color: red;"></i></h5>
+               <a href="/deletepost/{{post.id}}"> <h5 style="margin-left: 80%; padding-top: 2%;"><i class="fa fa-trash " style="color: red;"></i></h5></a>
                 <header class="w3-container  w3-round-large">
                     <a href="#" style="margin:10px 0px 0px 10px;display:flex;">
                         <img class="w3-circle" style="height:40px; width:40px" src="/media/{{post.photolink}}" alt="User"
@@ -108,8 +41,9 @@
                 </div>
             </div>
             {% endfor %}
-           
-     
+           {% else %}
+           <h3 style="font-weight: bold;">Nothing To Display!</h3>
+     {% endif %}
     </div>
 
 </body>

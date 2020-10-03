@@ -15,7 +15,7 @@
 {% block content %}
     <div class="container" style="margin:0px">
         <center>
-            <form action="/post" method="POST" enctype="multipart/form-data">
+            <form action="/sanstha/notice" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="w3-container w3-white w3-round-large w3-hover-shadow w3-card-4 w3-white"
                     style="padding: 0px;max-width: 600px;">
@@ -83,9 +83,9 @@
                     </div>
                     </div>
                 </div>
-                {% for post in posts %}
+                {% for post in notice %}
             <div class="w3-card-4 w3-center w3-margin w3-hover-shadow w3-round-large" style="padding-bottom:20px;max-width:600px;background:white">
-                <h5 style="margin-left: 80%; padding-top: 2%;"><i class="fa fa-trash " style="color: red;"></i></h5>
+              <a href="/deletenotice/{{post.id}}"> <h5 style="margin-left: 80%; padding-top: 2%;"><i class="fa fa-trash " style="color: red;"></i></h5></a> 
                 <header class="w3-container  w3-round-large">
                     <a href="#" style="margin:10px 0px 0px 10px;display:flex;">
                         <img class="w3-circle" style="height:40px; width:40px" src="/media/{{post.photolink}}" alt="User"

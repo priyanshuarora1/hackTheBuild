@@ -161,7 +161,8 @@ def delpost(request):
         postid = request.GET["id"]
         return HttpResponse("post deleted")
 def notice(request):
-    if(request.session.has_key("logged") and request.session["logged"]==True):
+    if(request.session.has_key("loged") and request.session["loged"]==True):
+        print("if me")
         fmt = "%d-%m-%Y %H:%M"
         zone = 'Asia/Kolkata'
         now_time = datetime.now(timezone(zone))
@@ -183,10 +184,14 @@ def notice(request):
         except:
             r=upload_notice.objects.create(desc=desc,link=link,admin=user,name=user.first_name,username=user.username,profilelink="#",photolink=user.admindetails.pic,designation=1,time=time)
         
-        return redirect("/sanstha/feed")
+        return redirect("/sanstha/announcementsadmin")
     else:
+        print("else ")
         return redirect("/sanstha/login")
 
 
 def announcementsadmin(request):
-    return render(request,"sanstha/announcementsadmin.html")
+    username = request.session["username"]
+    logged=User.objects.get(username=username)
+    notice_disp=upload_notice.objects.filter(admin_id=logged.id).order_by('id')[::-1]
+    return render(request,"sanstha/announcementsadmin.html",{"notice":notice_disp})

@@ -635,12 +635,36 @@ def delete_post(request,id):
         p=upload_posts.objects.get(id=id)
         if p.username==username:
             p.delete()
+            return redirect('/profile')
         else:
             return HttpResponse("You don't have permission to access the request!")
     elif admin==1:
         p=upload_posts.objects.get(id=id)
         if p.admin_id==user.id:
             p.delete()
+            return redirect("/sanstha/feed")
         else:
             return HttpResponse("You don't have permission to access the request!")
-    return redirect('/profile')
+
+def delete_notice(request,id):
+    admin=0
+    try:
+        user=teachermodel.objects.get(empid=request.session["teacher"])
+        username=user.empid      
+    except:
+        user=User.objects.get(username=request.session['username'])
+        admin=1
+    if admin==0:
+        p=upload_notice.objects.get(id=id)
+        if p.username==username:
+            p.delete()
+            return redirect('/profile')
+        else:
+            return HttpResponse("You don't have permission to access the request!")
+    elif admin==1:
+        p=upload_notice.objects.get(id=id)
+        if p.admin_id==user.id:
+            p.delete()
+            return redirect("/sanstha/announcementsadmin")
+        else:
+            return HttpResponse("You don't have permission to access the request!")
