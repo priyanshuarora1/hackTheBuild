@@ -156,3 +156,7 @@ def delpost(request):
         logged=User.objects.get(username=username)
         postid = request.GET["id"]
         return HttpResponse("post deleted")
+
+
+def announcementsadmin(request):
+    return render(request,"sanstha/announcementsadmin.html")

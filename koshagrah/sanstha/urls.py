@@ -15,5 +15,5 @@ urlpatterns = [
 	path("empdelete/<str:id>",views.empdelete,name="empdelete"),
 	path("feed",views.posts,name="allpost"),
 	path("delete",views.delpost,name="deletepost"),
-
+	path("announcementsadmin",views.announcementsadmin,name="announcementsadmin"),
 ]
