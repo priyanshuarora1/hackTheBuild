@@ -16,5 +16,5 @@ urlpatterns = [
 	path("feed",views.posts,name="allpost"),
 	path("delete",views.delpost,name="deletepost"),
 	path("notice",views.notice,name="notice"),
-
+	path("announcementsadmin",views.announcementsadmin,name="announcementsadmin"),
 ]

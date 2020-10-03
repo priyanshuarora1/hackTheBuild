@@ -186,3 +186,7 @@ def notice(request):
         return redirect("/sanstha/feed")
     else:
         return redirect("/sanstha/login")
+
+
+def announcementsadmin(request):
+    return render(request,"sanstha/announcementsadmin.html")
