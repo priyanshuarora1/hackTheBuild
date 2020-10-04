@@ -6,7 +6,7 @@ Online hackathon IIT Jammu
 
 ## See live site <a href="https://koshagrah.pythonanywhere.com">Here</a>
 
-## Download android app from <a href="https://koshagrah.pythonanywhere.com/static/img/base.apk">Here</a>
+## Download android app from <a href="https://koshagrah.pythonanywhere.com/static/base.apk">Here</a>
 
 # About
 Koshagrah is a cross-platform solution for teachers and students to interact with each other in particular organization. 
