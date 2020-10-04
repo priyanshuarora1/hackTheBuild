@@ -102,7 +102,7 @@
             {% for post in posts %}
             <div class="w3-card-4 w3-center w3-margin w3-hover-shadow w3-round-large" style="padding-bottom:20px;max-width:600px;background:#FFFFCE">
                 <header class="w3-container  w3-round-large">
-                    <a href="#" style="margin:10px 0px 0px 10px;display:flex;">
+                    <a href="/viewprofile/{{post.profilelink}}" style="margin:10px 0px 0px 10px;display:flex;">
                         <img class="w3-circle" style="height:40px; width:40px" src="media/{{post.photolink}}" alt="User"
                             title="Click for menu">
                         <h3 style="margin-left:10px;transform:translateY(-15px);">{{post.name}}</h3>
